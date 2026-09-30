@@ -1,0 +1,3 @@
+# Only needed with STT_BACKEND=faster-whisper (runs Whisper on the CPU,
+# no whisper.cpp server required).
+faster-whisper>=1.1

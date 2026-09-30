@@ -49,7 +49,16 @@ Tarayıcının Web Speech API'si (Chrome) yerel değildir, sesi Google'a gönder
   Düşünme (thinking) modu gecikmeyi artırır; sohbette kapatılmalı.
 - Alternatifler: gpt-oss-20b, Phi-4-mini (zayıf donanım), Llama 3.x.
 
-Öneri: **Gemma 4 12B** (veya donanım zayıfsa E4B) ile başlamak, **Qwen 3.5** ile aynı senaryoları karşılaştırmak.
+Güncelleme (Eylül 2026): Qwen ailesinde daha yeni sürümler var. **Qwen 3.6** (Nisan 2026) 27B ve
+35B-A3B MoE olarak, **Qwen 3.8** (Ağustos 2026) ise yalnızca 27B ve 2.4T-A95B olarak çıktı.
+15B altındaki en güncel Qwen modelleri hâlâ 3.5 serisinde (0.8B/2B/4B/9B).
+
+**Seçim (RX 6700 XT, 12 GB):** Öğretmen modeli için **Gemma 4 12B** (`gemma4:12b`, Q4 ~8 GB,
+tamamen VRAM'e sığıyor), konuşma tanıma için **Whisper large-v3-turbo** (whisper.cpp + Vulkan).
+- Qwen3.8-27B: Q4 ~17 GB, Q3 ~13 GB. 12 GB'a sığmıyor, RAM'e taşınınca ~4 token/sn'ye düşüyor ve fazla "düşünüyor".
+- Qwen3.6-35B-A3B: Q4 ~20 GB. RAM'e kısmen taşınarak çalışır, alternatif olarak denenebilir.
+- AMD'de Ollama için Vulkan (`OLLAMA_VULKAN=1`) kullanılmalı. gfx1031'de ROCm 6.4.3 ve sonrası çökme sorunu yaşatıyor.
+- faster-whisper (CTranslate2) ve NVIDIA STT modelleri CUDA istiyor. AMD'de GPU hızlandırma için whisper.cpp Vulkan kullanılacak.
 
 ### Donanıma göre kabaca eşleşme
 | Donanım | STT | LLM |
@@ -101,3 +110,7 @@ wav2vec2 tabanlı [OpenPronounce](https://github.com/Halleck45/OpenPronounce); s
 - https://aurigait.com/blog/gemma-4-features-benchmarks-guide/
 - https://www.betterclaw.io/blog/gemma-4-vs-qwen-3-5
 - https://en.wikipedia.org/wiki/Qwen
+- https://github.com/QwenLM/Qwen3.8
+- https://runaihome.com/blog/amd-gpu-not-detected-rocm-hsa-override-fix-2026/
+- https://github.com/ollama/ollama/issues/11247
+- https://github.com/storm-ace/WhisperWriter-AMD

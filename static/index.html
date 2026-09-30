@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Speaking Tutor</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Speaking Tutor</h1>
+    <div class="status">
+      <span id="status-llm" class="chip" title="Dil modeli">LLM</span>
+      <span id="status-stt" class="chip" title="Konuşma tanıma">STT</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Lesson setup -->
+    <section id="setup" class="panel">
+      <h2>Bugün ne konuşalım?</h2>
+      <div id="topics" class="topics"></div>
+      <label class="field">
+        <span>…ya da kendi konunu yaz</span>
+        <input id="custom-topic" type="text" maxlength="300" placeholder="ör. my favourite football team">
+      </label>
+
+      <div class="options">
+        <label class="field">
+          <span>Seviye</span>
+          <select id="level">
+            <option value="A2">A2 · Temel</option>
+            <option value="B1" selected>B1 · Orta</option>
+            <option value="B2">B2 · Orta-üstü</option>
+            <option value="C1">C1 · İleri</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Düzeltmeler</span>
+          <select id="correction-mode">
+            <option value="all">Her hatayı göster</option>
+            <option value="important" selected>Sadece önemli hatalar</option>
+            <option value="none">Düzeltme yapma</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Açıklama dili</span>
+          <select id="explain-lang">
+            <option value="tr" selected>Türkçe</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+      </div>
+      <label class="check">
+        <input id="review-transcript" type="checkbox">
+        <span>Göndermeden önce yazıya dökülen metni kontrol edeyim</span>
+      </label>
+      <button id="start" class="primary">Derse başla</button>
+      <p id="setup-error" class="error" hidden></p>
+    </section>
+
+    <!-- Conversation -->
+    <section id="lesson" hidden>
+      <div class="lesson-head">
+        <div>
+          <span class="muted">Konu</span>
+          <strong id="lesson-topic"></strong>
+        </div>
+        <div class="lesson-actions">
+          <button id="finish">Bitir ve değerlendir</button>
+          <button id="new-lesson" class="ghost">Yeni ders</button>
+        </div>
+      </div>
+
+      <div id="chat" class="chat" aria-live="polite"></div>
+
+      <div class="composer">
+        <p id="hint" class="muted hint">Konuşmak için düğmeyi basılı tut ya da <kbd>Space</kbd> tuşunu basılı tut.</p>
+        <div class="composer-row">
+          <button id="talk" class="talk" aria-label="Basılı tutarak konuş">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2Z"/></svg>
+          </button>
+          <form id="text-form" class="text-form">
+            <input id="text-input" type="text" autocomplete="off" placeholder="…ya da yaz, Enter ile gönder">
+            <button type="submit" class="primary">Gönder</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Summary -->
+    <section id="summary" class="panel" hidden></section>
+  </main>
+
+  <script src="/static/recorder.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
